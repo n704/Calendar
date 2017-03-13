@@ -3,6 +3,7 @@ import React from 'react'
 import moment from 'moment';
 import momentLocalizer from 'react-widgets/lib/localizers/moment'
 import 'react-widgets/lib/less/react-widgets.less'
+import  '../public/react-widgets.js'
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 export const HOST = "http://127.0.0.1:5000"
 momentLocalizer(moment)
@@ -48,7 +49,7 @@ export function postApi(url, body = {}, callback){
 export const DateTime = React.createClass({
   propTypes : {
     errors: React.PropTypes.array,
-    value: React.PropTypes,
+    value: React.PropTypes.object,
     label: React.PropTypes.string.isRequired,
     onChange: React.PropTypes.func.isRequired,
     disabled : React.PropTypes.bool
@@ -56,7 +57,7 @@ export const DateTime = React.createClass({
 
   getDefaultProps: function(){
     return {
-      value: null,
+      value: new Date(),
       disabled : false
     }
   },
