@@ -6,14 +6,23 @@ import CalendarCss from 'react-big-calendar/lib/css/react-big-calendar.css';
 // Setup the localizer by providing the moment (or globalize) Object
 // to the correct localizer.
 BigCalendar.momentLocalizer(moment);
-const Calendar = props => (
-  <div style={{ height: "500px"}}>
-    <BigCalendar
-      views={['month']}
-      events={[]}
-      defaultDate={new Date(2015, 3, 1)}
-    />
-  </div>
-);
 
-export default Calendar;
+export default class Calendar extends Component {
+    constructor(props){
+    	super(props);
+    	this.state = {};
+    }
+
+    render() {
+      console.log(this.props)
+      return (<div style={{ height: "500px"}}>
+        <BigCalendar
+          selectable
+          views={['month']}
+          events={[]}
+          defaultDate={new Date()}
+          onSelectSlot={(slotInfo) => this.props.history.push('/newEvent?start_time='+slotInfo.start.toLocaleString())}
+        />
+      </div>)
+    }
+}

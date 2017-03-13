@@ -7,7 +7,7 @@ event_api = Blueprint('event_api', __name__)
 @event_api.route('/',methods=["get"])
 def get_event():
     """Event all event in time range."""
-    json_data = request.get_json()
+    json_data = request.get_json() or {}
     return make_response(jsonify(Event.get_events(json_data)))
 
 @event_api.route('/', methods=["post"])
@@ -18,7 +18,7 @@ def create_event():
     if error:
         return make_response(jsonify({"error": error}), 400)
     oEvent = Event.create(data)
-    return make_response(jsonify(Event.as_dict()))
+    return make_response(jsonify(oEvent.as_dict()))
 
 @event_api.route('/<int:id>',methods=["post"])
 def update_event(id):
@@ -41,3 +41,12 @@ def delete_event(id):
         return make_response(jsonify({"error": error}), 400)
     oEvent.delete()
     return make_response(jsonify({"success": "Event Deleted"}))
+
+@event_api.route('/<int:id>',methods=["get"])
+def get_event_by_id(id):
+    """Get Event."""
+    oEvent, error = Event.get_by_id(id)
+    print oEvent
+    if error:
+        return make_response(jsonify({"error": error}), 400)
+    return make_response(jsonify(oEvent.as_dict()))

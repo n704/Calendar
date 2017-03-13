@@ -13,9 +13,10 @@ class Event(db.Model):
     def __init__(self):
         self.start_time = datetime.datetime.utcnow()
 
-    def get_by_id(self, id):
+    @classmethod
+    def get_by_id(cls, id):
         """Get Event if Present"""
-        oEvent = Event.query.get(id)
+        oEvent = cls.query.get(id)
         if oEvent:
             return oEvent, None
         return None, "Event not Present"
@@ -29,7 +30,7 @@ class Event(db.Model):
         oEvent.location = data["location"]
         oEvent.description = data["description"]
         db.session.add(oEvent)
-        db.session.flush()
+        db.session.commit()
         return oEvent
 
     def delete(self):
@@ -64,7 +65,9 @@ class Event(db.Model):
             "end_time" : self.end_time,
             "location" : self.location,
             "description" : self.description,
-            "id" : self.id
+            "id" : self.id,
+            "start" : self.start_time,
+            "end" : self.end_time
         }
 
     @classmethod
@@ -75,14 +78,17 @@ class Event(db.Model):
         @param time_range keys present start_time, end_time.
         """
         now = datetime.datetime.utcnow()
-        month = (now.month % 12) + 1
+        month = now.month + 1
+        if month == 13:
+            month = 1
         start_time = time_range.get(
             'start_time',
-            datetime.datetime(now.year,month,1)
+            datetime.datetime(now.year,now.month,1)
             )
         end_time = time_range.get(
             'end_time',
-            datetime.datetime(now.year,month + 1,1)
+            datetime.datetime(now.year,month,1)
             )
+        print start_time, end_time
         lEvent = cls.get_list(start_time, end_time)
         return [ oEvent.as_dict() for oEvent in lEvent ]

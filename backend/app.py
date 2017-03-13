@@ -3,6 +3,7 @@ from flask_migrate import MigrateCommand
 from flask_script import Manager
 from commons import create_configuration, db, migrate
 from views.api.event import event_api
+from flask_cors import CORS
 
 def create_app():
     """Creating app."""
@@ -10,6 +11,7 @@ def create_app():
     app.config.update(create_configuration())
     app.register_blueprint(event_api, url_prefix="/api/event")
     db.init_app(app)
+    CORS(app)
     migrate.init_app(app, db)
     return app
 
