@@ -67,7 +67,8 @@ class Event(db.Model):
             "description" : self.description,
             "id" : self.id,
             "start" : self.start_time,
-            "end" : self.end_time
+            "end" : self.end_time,
+            "title" : self.description
         }
 
     @classmethod
