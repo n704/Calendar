@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import Modal from 'react-modal';
+import Dialog from 'material-ui/Dialog';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 import { postApi, DateTime,API_URL } from '../commons'
 export default class NewEvent extends Component {
 	constructor(props){
@@ -27,9 +29,11 @@ export default class NewEvent extends Component {
 	}
 	render(){
 		return(
-			<Modal
-			isOpen
-			contentLabel='New Event'>
+			<Dialog
+			modal
+			open
+			title='New Event'
+			style={{ minHeight : '500px' }}>
 			<div>
 			<DateTime
 					label='Start Time'
@@ -42,12 +46,12 @@ export default class NewEvent extends Component {
 					value={this.state.end_time}
 					onChange={date => this.setState({end_time : date})}
 					/><br/>
-				Location: <input type="text" value={this.state.location} onChange={ e => this.setState({location :e.target.value})}/><br/>
-				description: <input type="text" value={this.state.description} onChange={ e => this.setState({description :e.target.value})}/><br/>
-				<button onClick={e => this.createEvent()}>Save</button>
-				<button onClick={e => this.returnHome()}>Cancel</button>
+				<TextField type="text" floatingLabelText="Location"value={this.state.location} onChange={ e => this.setState({location :e.target.value})}/><br/>
+				<TextField type="text" floatingLabelText="Description"value={this.state.description} onChange={ e => this.setState({description :e.target.value})}/><br/>
+				<RaisedButton label='SAVE' labelColor="white" backgroundColor="green" onTouchTap={e => this.createEvent()}/>
+				<RaisedButton label='CANCEL' onTouchTap={e => this.returnHome()}/>
 			</div>
-			</Modal>
+			</Dialog>
 		);
 	}
 }

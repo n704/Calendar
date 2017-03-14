@@ -40,8 +40,8 @@ class Event(db.Model):
 
     def update(self, data):
         """Updating Event."""
-        self.start_time = data["start_time"]
-        self.end_time = data["end_time"]
+        self.start_time = data["start_time"].replace(tzinfo = None)
+        self.end_time = data["end_time"].replace(tzinfo=None)
         self.location = data["location"]
         self.description = data["description"]
         db.session.commit()

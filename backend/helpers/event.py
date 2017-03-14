@@ -10,8 +10,9 @@ class EventSchema(Schema):
     start_time = fields.DateTime(required=True)
     end_time = fields.DateTime(required=True)
 
-    @validates_schema
-    def check_time(self,data):
+    @validates_schema(pass_original=True)
+    def check_time(self,data,data_orginal):
         """Checking if end time is less than start time."""
+        print data,data_orginal
         if data['start_time'] > data['end_time']:
             raise ValidationError('event end time should be greater than start time.')
