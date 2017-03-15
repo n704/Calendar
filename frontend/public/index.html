@@ -24,6 +24,37 @@
     <title>React App</title>
   </head>
   <body>
+    <script type="text/javascript">
+      // Client ID and API key from the Developer Console
+      var CLIENT_ID = '621644158702-r9fssm9k3m5f6to1c4pp7l25dcfqgpia.apps.googleusercontent.com';
+
+      // Array of API discovery doc URLs for APIs used by the quickstart
+      var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
+
+      // Authorization scopes required by the API; multiple scopes can be
+      // included, separated by spaces.
+      var SCOPES = "https://www.googleapis.com/auth/calendar";
+      function handleClientLoad() {
+        gapi.load('client:auth2', initClient);
+      }
+
+      /**
+       *  Initializes the API client library and sets up sign-in state
+       *  listeners.
+       */
+      function initClient() {
+        gapi.client.init({
+          discoveryDocs: DISCOVERY_DOCS,
+          clientId: CLIENT_ID,
+          scope: SCOPES
+        }).then(function () {
+        });
+      }
+      </script>
+      <script async defer src="https://apis.google.com/js/api.js"
+  onload="this.onload=function(){};handleClientLoad()"
+  onreadystatechange="if (this.readyState === 'complete') this.onload()">
+</script>
     <div id="root"></div>
     <!--
       This HTML file is a template.

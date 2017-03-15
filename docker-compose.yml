@@ -1,0 +1,18 @@
+version: '2.1'
+services:
+  cal_backend:
+    container_name: cal_backend
+    build: ./backend
+    network_mode: "host"
+    ports:
+      - "5000:5000"
+    command: python app.py runserver
+  cal_frontend:
+    network_mode: "host"
+    container_name: cal_frontend
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - cal_backend
+    command: npm start

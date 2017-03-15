@@ -8,10 +8,13 @@ class Event(db.Model):
     start_time = db.Column(db.DateTime)
     end_time = db.Column(db.DateTime)
     location = db.Column(db.String(300))
-    description = db.Column(db.String(5000), nullable=False)
+    description = db.Column(db.String(5000),nullable=False)
+    title = db.Column(db.String(300))
+    sync = db.Column(db.Boolean,default='false')
 
     def __init__(self):
         self.start_time = datetime.datetime.utcnow()
+        self.sync = False
 
     @classmethod
     def get_by_id(cls, id):
@@ -29,6 +32,9 @@ class Event(db.Model):
         oEvent.end_time = data["end_time"]
         oEvent.location = data["location"]
         oEvent.description = data["description"]
+        oEvent.title = data["title"]
+        if "sync" in data:
+            oEvent.sync =  data["sync"]
         db.session.add(oEvent)
         db.session.commit()
         return oEvent
@@ -44,6 +50,8 @@ class Event(db.Model):
         self.end_time = data["end_time"].replace(tzinfo=None)
         self.location = data["location"]
         self.description = data["description"]
+        self.title = data["title"]
+        self.sync = data['sync']
         db.session.commit()
         return self
 
@@ -68,7 +76,8 @@ class Event(db.Model):
             "id" : self.id,
             "start" : self.start_time,
             "end" : self.end_time,
-            "title" : self.description
+            "title" : self.title,
+            "sync": self.sync
         }
 
     @classmethod

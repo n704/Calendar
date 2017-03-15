@@ -27,7 +27,8 @@ export default class ClassName extends Component{
 			start_time : new Date(this.state.start_time).toISOString(),
 			end_time : new Date(this.state.end_time).toISOString(),
 			location : this.state.location,
-			description : this.state.description
+			description : this.state.description,
+			title : this.state.title
 		}
 		postApi(API_URL.update_event(this.props.match.params.id),resquestBody, res => {
 			if(res.error){
@@ -70,6 +71,7 @@ export default class ClassName extends Component{
 					/><br/>
 				<TextField type="text" floatingLabelText="Location"value={this.state.location} onChange={ e => this.setState({location :e.target.value})}/><br/>
 				<TextField type="text" floatingLabelText="Description"value={this.state.description} onChange={ e => this.setState({description :e.target.value})}/><br/>
+				<TextField type="text" floatingLabelText="Title"value={this.state.title} onChange={ e => this.setState({title :e.target.value})}/>
 				<RaisedButton label='SAVE' labelColor="white" backgroundColor="green" onTouchTap={e => this.updateEvent()}/>
 				<RaisedButton label='CANCEL' onTouchTap={e => this.returnHome()}/>
 				<RaisedButton label='DELETE' labelColor="#FFFFFF" backgroundColor="red" onTouchTap={e => this.deleteEvent()}/>

@@ -12,7 +12,8 @@ export default class NewEvent extends Component {
 			start_time : new Date(),
 			end_time: new Date(),
 			location: "",
-			description: ""
+			description: "",
+			title: ""
 		};
 	}
 	createEvent(){
@@ -48,6 +49,7 @@ export default class NewEvent extends Component {
 					/><br/>
 				<TextField type="text" floatingLabelText="Location"value={this.state.location} onChange={ e => this.setState({location :e.target.value})}/><br/>
 				<TextField type="text" floatingLabelText="Description"value={this.state.description} onChange={ e => this.setState({description :e.target.value})}/><br/>
+				<TextField type="text" floatingLabelText="Title"value={this.state.title} onChange={ e => this.setState({title :e.target.value})}/>
 				<RaisedButton label='SAVE' labelColor="white" backgroundColor="green" onTouchTap={e => this.createEvent()}/>
 				<RaisedButton label='CANCEL' onTouchTap={e => this.returnHome()}/>
 			</div>
