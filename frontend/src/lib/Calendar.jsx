@@ -20,7 +20,7 @@ class GoogleCalendar extends Component {
   }
   constructor(props){
   	super(props);
-    this.signInOrOut = this.signInOrOut.bind(this)
+    this.signinOrRefresh = this.signinOrRefresh.bind(this)
     this.getEvents = this.getEvents.bind(this)
   	this.state = {
       message : "SignIn"
@@ -29,7 +29,7 @@ class GoogleCalendar extends Component {
   getEvents(cb){
     const date = new Date()
     const start_time = date.toISOString()
-    const end_time = (new Date(date.getFullYear(),(date.getMonth()+ 1)%12 ),1).toISOString()
+    const end_time = (new Date(date.getFullYear(),((date.getMonth()+ 1)%12) ,1)).toISOString()
     gapi.client.calendar.events.list({
           'calendarId': 'primary',
           'timeMin': start_time,
@@ -46,20 +46,28 @@ class GoogleCalendar extends Component {
         })
   }
 
-  signInOrOut(){
+  signinOrRefresh(){
     if(this.state.message == "SignIn"){
       gapi.auth2.getAuthInstance().signIn();
-      this.getEvents(this.props.onChange)
-      this.setState({message : "Logout"})
-    }else{
-      gapi.auth2.getAuthInstance().signOut();
-      this.setState({message : "SignIn"})
+      this.setState({message : "Refresh"})
     }
+    this.getEvents(this.props.onChange)
   }
   render(){
-    return(
-      <button onClick={e => this.signInOrOut()}>{this.state.message}</button>
-    );
+    if(this.state.message == "SignIn"){
+      return(
+        <button onClick={e => this.signinOrRefresh()} style={{ float: 'right'}}>{this.state.message}</button>
+      );
+    }else{
+      return (
+        <i
+        className="fa fa-refresh"
+        aria-hidden="true"
+        style={{ float: 'right'}}
+        onClick={ e => this.signinOrRefresh()}
+        />
+      )
+    }
   }
 }
 export default class Calendar extends Component {
