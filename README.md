@@ -2,7 +2,7 @@
 This is calendar App that user can create event and sync with google calendar.
 
 # Archiecture
-Application uses MicroServices Archiecture for solution. It consists of 2 services 
+Application uses MicroServices Archiecture for solution. It consists of 2 services
 * Backend
 * Frontend
 ## Backend
@@ -39,3 +39,6 @@ Running application using docker container.
 cd /Path/to/Calendar
 docker-compose up
 ```
+
+## Syncing
+In all calendar event there is a field called `sync`. by default it is false, meaning need to sync with Google Calendar. Durning sync all event in google calendar get inputed to database with sync as true. So only one copy of event is create on both sides.
